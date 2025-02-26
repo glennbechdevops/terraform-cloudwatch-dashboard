@@ -393,8 +393,6 @@ terraform apply
 
 ```
 
-Note that Terraform asks you for values for variables that do not have default values. This will not work when we want GitHub Actions to run Terraform for us. Do you remember how you can give these arguments on the command line? You can also create default values for the variables if you wish - as long as you understand how this works.
-
 ## Confirm Email
 
 For SNS to be allowed to send you emails, you must confirm your email address. You will receive an email with a link you must click the first time you run terraform apply.
