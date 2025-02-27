@@ -140,15 +140,6 @@ You need to modify the MetricsConfig class and use your own name for the cloudwa
     };
 ````
 
-Install Maven in Cloud 9. We will try to run the Spring Boot application from Maven in the terminal.
-
-```
-sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-sudo yum install -y apache-maven
-sudo yum install jq
-```
-
 ## Start Spring Boot applikasjonen 
 
 
