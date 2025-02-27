@@ -56,6 +56,17 @@ Jq is a great tool to work with JSON from the command line
 sudo yum install jq
 ```
 
+## Install maven 
+
+Install Maven in Cloud 9. We will try to run the Spring Boot application from Maven in the terminal.
+
+```
+sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+sudo yum install -y apache-maven
+sudo yum install jq
+```
+
 ## Use Terraform to Create a CloudWatch Dashboard
 
 * Clone this repo into your Cloud9 environment (Remember to clone with the HTTP URL)
@@ -95,10 +106,10 @@ DEATHSTAR
 ```
 ## Task 
 
-* Run terraform init / plan / apply from your Cloud 9 environment.
+* Run terraform init / plan / apply from your Cloud 9 environment See that a Dashboard is created in CloudWatch
 * you have to type in a student name, why?
 * Can you think of at least two ways to fix it so that you don't have to type a student name on plan/apply/destroy?
-* Navigate to the AWS Cloudwatch service, See that a Dashboard is created in CloudWatch
+
 
 ## Look at the Spring Boot application
 
@@ -135,10 +146,10 @@ Install Maven in Cloud 9. We will try to run the Spring Boot application from Ma
 sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 sudo yum install -y apache-maven
-
+sudo yum install jq
 ```
 
-## Start the Spring Boot application
+## Start Spring Boot applikasjonen 
 
 
 From the folder where you cloned repository for this exercise; Start the Spring boot app with maven with
@@ -148,7 +159,7 @@ mvn spring-boot:run
 
 The code in this repository exposes a REST interface at http://localhost:8080/account
 
-## Test the API (Advanced option)
+## Test the API
 
 Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols 
 including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending  requests, and interacting with APIs directly 
@@ -173,22 +184,12 @@ Find the IP address of your computer
  curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 ```
 
-You can then use for example postman to access your API - or even curl again from your mac or windows machine 
-(example with teacher IP address)
-
-```
- curl --location --request POST 'http://54.246.38.229:8080/account' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "id": 3,
-    "balance" : "100000"
-}'|jq
-```
+You can then use for example postman to access your API 
 
 ![](img/postman.png)
 
 
-### Use Curl instead (Chicken option)
+### Use Curl instead
 
 If you feel like just using the Cloud 9 terminal to test the API curl is your friend
 
@@ -227,31 +228,10 @@ curl --location --request POST 'http://localhost:8080/account/2/transfer/3' \
 * Go to the AWS UI, and select the CloudWatch service. Choose "Dashboards".
 * Search for your own student name and open the dashboard you created.
 * See that you get data points on the graph.
-* You might need to wait a bit, or change the interval to 1 minute on the graph (Click the : settings icon upper right)
 
 It should look something like this:
 
 ![Alt text](img/dashboard.png  "a title")
-
-## Check CloudWatch metrics, and your custom name space
-
-* Go to CloudWatch, and chose the menu item "metrics" 
-* Under Cuusom name spaces you will see your student name
-
-![image](https://github.com/user-attachments/assets/d4752c9d-52a1-4a7c-ac8a-34ee0ae3cfc8)
-
-* Explore the different metrics delivered by MicroMeter by default, it's 100+ !
-
-
-## Create github actions workflow
-
-* Based on code in a previous lab, make a GitHub actions workflow that builds and deploys the infrastructure code on every push to main
-* Make sure that only plan is done on non-main branches or pull request events
-
-##  GitHub actions workflow for containerized App Runner application
-
-* By now, you should be ble to package the Spring app in this repo to an ECR repository, and add infrastructure code to run it as an AWS Apprunner application.
-    
 
 # PART 2
 
@@ -412,8 +392,6 @@ terraform init
 terraform apply
 
 ```
-
-Note that Terraform asks you for values for variables that do not have default values. This will not work when we want GitHub Actions to run Terraform for us. Do you remember how you can give these arguments on the command line? You can also create default values for the variables if you wish - as long as you understand how this works.
 
 ## Confirm Email
 
