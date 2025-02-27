@@ -229,6 +229,11 @@ It should look something like this:
 ## Gauge for the Bank's Total Sum
 You are now going to create a Micrometer Gauge that displays the net balance of the bank. Place it in the correct location in the code.
 
+Please note that you have ti omport the BigDecimal class. When you add this code.
+
+```
+import java.math.BigDecimal;
+
 ```shell
 // This meter type "Gauge" reports the total amount of money in the bank
 Gauge.builder("bank_sum", theBank,
