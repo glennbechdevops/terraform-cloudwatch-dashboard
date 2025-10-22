@@ -35,32 +35,9 @@ aws --version
 jq --version
 ```
 
-## Terraform pro tip (Optional)
+## Run aws configure
 
-If you want to manage multiple Terraform versions, you can use "tfenv" - a tool that allows you to download and use
-different versions of Terraform. This is very useful if you work in an environment with several different projects
-or teams that use different Terraform versions.
-
-```sh
-git clone https://github.com/tfutils/tfenv.git ~/.tfenv
-echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
-sudo ln -s ~/.tfenv/bin/* /usr/local/bin
-```
-
-To see what versions are available:
-
-```sh
-tfenv list-remote
-```
-
-Let's pick 1.7.4 which is pretty recent - use will also install if the version is not downloaded on your computer.
-
-```sh
-tfenv use 1.7.4
-terraform --version
-```
-
-Check that it worked!
+* Run `aws configure` to set up AWS credentials for your codespace
 
 ## Use Terraform to Create a CloudWatch Dashboard
 
