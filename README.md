@@ -5,29 +5,49 @@ In this exercise, you will learn how to instrument a Spring Boot application wit
 This exercise utilizes Java, Spring Boot, and a metrics framework called Micrometer.
 We will also explore how to visualize metrics in AWS CloudWatch and how to use Terraform to create a dashboard.
 
-# Prepare your Cloud 9 environment
+# Prepare your GitHub Codespaces environment
 
-Log in to your Cloud 9 environment as usual
+## Fork and Open in Codespaces
 
-*Important. When you use both Java- and Terraform in the same lab, you might run out of disk space on your Cloud 9 instance.* It is recomended to go through the instructions 
-in this document in the beginning of the lab to increase the disk size. 
-https://github.com/glennbechdevops/cloud9_tools
+1. Fork this repository to your own GitHub account by clicking the "Fork" button at the top right of the repository page
+2. Once forked, navigate to your forked repository
+3. Click the green "Code" button and select "Codespaces"
+4. Click "Create codespace on main" to launch a new Codespaces environment
 
-It takes 10-20 minutes to actually increase the size available to the instance so it's better to do this up front. 
+GitHub Codespaces will automatically set up your development environment with all necessary tools including:
+- Java 17
+- Maven
+- Terraform
+- AWS CLI
+- jq
 
-## Terraform pro tip 
+The setup process may take a few minutes the first time you create the codespace. Once complete, you'll have a fully configured environment ready to go! 
 
-Instead of using the Terraform installation that comes with Cloud9, we can use "tfenv" - a tool that 
-allows us to download and use different versions of Terraform. This is very useful to know since you might work in an 
-environment with several different projects or teams that use different Terraform versions.
+## Verify Your Environment
 
-```sh   
+The devcontainer should have already installed all necessary tools. You can verify the installations by running:
+
+```sh
+java -version    # Should show Java 17
+mvn -version     # Should show Maven
+terraform --version
+aws --version
+jq --version
+```
+
+## Terraform pro tip (Optional)
+
+If you want to manage multiple Terraform versions, you can use "tfenv" - a tool that allows you to download and use
+different versions of Terraform. This is very useful if you work in an environment with several different projects
+or teams that use different Terraform versions.
+
+```sh
 git clone https://github.com/tfutils/tfenv.git ~/.tfenv
 echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
 sudo ln -s ~/.tfenv/bin/* /usr/local/bin
 ```
 
-To see what versions are available 
+To see what versions are available:
 
 ```sh
 tfenv list-remote
@@ -37,39 +57,14 @@ Let's pick 1.7.4 which is pretty recent - use will also install if the version i
 
 ```sh
 tfenv use 1.7.4
-```
-
-Set up terraform to use this version 
-
-```sh
-tfenv use 1.7.4
 terraform --version
 ```
 
 Check that it worked!
 
-## Install JQ
-
-Jq is a great tool to work with JSON from the command line 
-
-```
-sudo yum install jq
-```
-
-## Install maven 
-
-Install Maven in Cloud 9. We will try to run the Spring Boot application from Maven in the terminal.
-
-```
-sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-sudo yum install -y apache-maven
-sudo yum install jq
-```
-
 ## Use Terraform to Create a CloudWatch Dashboard
 
-* Clone this repo into your Cloud9 environment (Remember to clone with the HTTP URL)
+* You should now have this repository open in your Codespaces environment
 * Look in the "infra" directory - here you will find the file dashboard.tf which contains Terraform code for a CloudWatch Dashboard.
 * As you can see, the dashboard is described in a JSON format. Here you can find documentation https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/CloudWatch-Dashboard-Body-Structure.html
 Here you also see how one often includes text or code using "Heredoc" syntax in Terraform code, so that we don't have to worry about "newline", "Escaping" of special characters, etc. (https://developer.hashicorp.com/terraform/language/expressions/strings)
@@ -104,10 +99,10 @@ resource "aws_cloudwatch_dashboard" "main" {
 DEATHSTAR
 }
 ```
-## Task 
+## Task
 
-* Run terraform init / plan / apply from your Cloud 9 environment See that a Dashboard is created in CloudWatch
-* you have to type in a student name, why?
+* Run terraform init / plan / apply from your Codespaces terminal. See that a Dashboard is created in CloudWatch
+* You have to type in a student name, why?
 * Can you think of at least two ways to fix it so that you don't have to type a student name on plan/apply/destroy?
 
 
@@ -152,37 +147,23 @@ The code in this repository exposes a REST interface at http://localhost:8080/ac
 
 ## Test the API
 
-Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols 
-including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending  requests, and interacting with APIs directly 
+Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols
+including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending requests, and interacting with APIs directly
 from the terminal or in scripts.
 
-If you don't feel like using curl, but would prefer postman or something and run the tests from your local computer; follow these instructions 
+### Using Codespaces Port Forwarding
 
-Find the Security group (A kind of firewall) protecting your Cloud 9 machine. 
-
-```shell
- aws ec2 describe-instances --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) --query 'Reservations[*].Instances[*].SecurityGroups[*].GroupId' --output text
-```
-Open traffic from everywhere on port  8080 ```YOUR SECURITY GROUP ID``` is the output form the previous command
-
-```shell
-aws ec2 authorize-security-group-ingress --group-id <YOUR SECURITY GROUP ID>  --protocol tcp --port 8080 --cidr 0.0.0.0/0
-```
-
-Find the IP address of your computer
-
-```shell
- curl -s http://169.254.169.254/latest/meta-data/public-ipv4
-```
-
-You can then use for example postman to access your API 
+When you run the Spring Boot application on port 8080, GitHub Codespaces will automatically detect it and forward the port.
+You'll see a notification in VS Code, and the port will appear in the "Ports" tab. You can:
+- Click on the forwarded address to open it in your browser
+- Use tools like Postman or curl from your local machine by using the forwarded URL
+- The forwarded URL will look something like: `https://username-repo-xxxxx.github.dev`
 
 ![](img/postman.png)
 
+### Use Curl in the Codespaces Terminal
 
-### Use Curl instead
-
-If you feel like just using the Cloud 9 terminal to test the API curl is your friend
+You can also test the API directly from within the Codespaces terminal using curl
 
 Create an account with an id and balance
 ```sh
@@ -379,7 +360,7 @@ variable "alarm_email" {
 ```
 Because we do not want to hardcode email, or any specific values in our Terraform code. Feel free to set your own email address as the default value for this variable 
 
-# Run the Terraform Code from Cloud9
+# Run the Terraform Code from Codespaces
 
 ## Go to the infra directory. Run:
 
