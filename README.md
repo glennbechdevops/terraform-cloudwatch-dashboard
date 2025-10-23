@@ -37,7 +37,9 @@ jq --version
 
 ## Run aws configure
 
-* Run `aws configure` to set up AWS credentials for your codespace
+* Run `aws configure` to set up AWS credentials for your codespace  
+* use region `eu-east-1` 
+* use json as output format 
 
 ## Use Terraform to Create a CloudWatch Dashboard
 
@@ -76,16 +78,26 @@ resource "aws_cloudwatch_dashboard" "main" {
 DEATHSTAR
 }
 ```
-## Task
+## Task 
 
-* Run terraform init / plan / apply from your Codespaces terminal. See that a Dashboard is created in CloudWatch
+In the terminal, use "cd" to change your working directory in to the infra folder 
+
+* Run 
+
+```
+* terraform init
+* terraform plan 
+* terraform apply 
+```
+
 * You have to type in a student name, why?
-* Can you think of at least two ways to fix it so that you don't have to type a student name on plan/apply/destroy?
-
+* Can you think of at least two ways to fix that- so that you don't have to type a student name on plan and apply?
 
 ## Look at the Spring Boot application
 
-Oepn *BankAccountController.Java* , You'll find this code
+* the Java application can be found in the `src/` folder
+
+Open *BankAccountController.Java* , You'll find this code
 
 ```java
     @Override
@@ -115,7 +127,8 @@ You need to modify the MetricsConfig class and use your own name for the cloudwa
 ## Start Spring Boot applikasjonen 
 
 
-From the folder where you cloned repository for this exercise; Start the Spring boot app with maven with
+From the root folder  (where you cloned repository for this exercise); Start the Spring boot app with maven with
+
 ```
 mvn spring-boot:run
 ```
@@ -124,9 +137,6 @@ The code in this repository exposes a REST interface at http://localhost:8080/ac
 
 ## Test the API
 
-Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols
-including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending requests, and interacting with APIs directly
-from the terminal or in scripts.
 
 ### Using Codespaces Port Forwarding
 
@@ -140,7 +150,8 @@ You'll see a notification in VS Code, and the port will appear in the "Ports" ta
 
 ### Use Curl in the Codespaces Terminal
 
-You can also test the API directly from within the Codespaces terminal using curl
+Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending requests, and interacting with APIs directly
+fro  the terminal or in scripts.
 
 Create an account with an id and balance
 ```sh
@@ -155,7 +166,7 @@ curl --location --request POST 'http://localhost:8080/account' \
 * See information about an account
 
 ```sh 
-  curl --location --request GET 'http://localhost:8080/account/1' \
+  curl --location --request GET 'http://localhost:8080/account/3' \
   --header 'Content-Type: application/json'|jq
 ```
 
@@ -187,7 +198,7 @@ It should look something like this:
 ## Gauge for the Bank's Total Sum
 You are now going to create a Micrometer Gauge that displays the net balance of the bank. Place it in the correct location in the code.
 
-Please note that you have ti omport the BigDecimal class. When you add this code.
+Please note that you have to import the BigDecimal class. When you add this code.
 
 ```
 import java.math.BigDecimal;
