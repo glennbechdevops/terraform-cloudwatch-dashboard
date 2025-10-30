@@ -193,12 +193,23 @@ It should look something like this:
 
 ![Alt text](img/dashboard.png  "a title")
 
+
+
+## Do not move on unless you fully understand what has been done so far 
+
+* Look at the micrometer documentation-  (https://docs.spring.io/spring-boot/reference/actuator/metrics.html)
+* Try to add more metrics to the code, also make new endpoints if you want more code to test
+* Make sure you understand the CloudWatch dashboard Syntax, at least at a high level - try to add another widget!
+
+
+
 # PART 2
 
 ## Gauge for the Bank's Total Sum
-You are now going to create a Micrometer Gauge that displays the net balance of the bank. Place it in the correct location in the code.
 
-Please note that you have to import the BigDecimal class. When you add this code.
+You are now going to create a Micrometer Gauge that displays the net balance of the bank. How much money that is in all accoubts - Place it inside the `public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent)` method in BankAcountController class. 
+
+Please note that you have to import the BigDecimal class. When you add this code. Add the `import java.math.BigDecimal` line to the top of the file.
 
 ```
 import java.math.BigDecimal;
@@ -211,10 +222,8 @@ Gauge.builder("bank_sum", theBank,
                         .map(Account::getBalance)
                         .mapToDouble(BigDecimal::doubleValue)
                         .sum())
-        .register(meterRegistry);
+        .register(meterRegistry));
 ```
-
-
 
 ## Create a New Widget in the CloudWatch Dashboard
 Extend the Terraform code so that it displays an additional widget for the metric bank_sum.
@@ -261,7 +270,6 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   protocol  = "email"
   endpoint  = var.alarm_email
 }
-
 ```
 
 ### A Little Explanation About the aws_cloudwatch_metric_alarm Resource
@@ -339,13 +347,13 @@ module "alarm" {
 }
 
 ```
-
 ## Finally, you must change variables.tf in the /infra folder, and add the variable. 
 ```hcl
 variable "alarm_email" {
     type = string
 }
 ```
+
 Because we do not want to hardcode email, or any specific values in our Terraform code. Feel free to set your own email address as the default value for this variable 
 
 # Run the Terraform Code from Codespaces
@@ -355,7 +363,6 @@ Because we do not want to hardcode email, or any specific values in our Terrafor
 ```shell
 terraform init
 terraform apply
-
 ```
 
 ## Confirm Email
@@ -382,7 +389,6 @@ curl --location --request POST 'http://localhost:8080/account' \
 }'|jq
 
 ```
-
 - Check that the alarm goes off by seeing that you have received an email.
 - Go to CloudWatch Alarms in AWS and see that the alarm's state is `IN_ALARM`.
 - Get the bank's balance back to 0, for example by creating an account with a negative balance.
