@@ -226,6 +226,7 @@ Gauge.builder("bank_sum", theBank,
 ```
 
 ## Create a New Widget in the CloudWatch Dashboard
+
 Extend the Terraform code so that it displays an additional widget for the metric bank_sum.
 Hint: you will need to change the X/Y values so they do not overlap!
 
@@ -243,7 +244,7 @@ We will now create a Terraform module. While we work on it, it's smart to keep i
 2. In this folder, create a new Terraform file named main.tf
 
 Take not of the fact that we're following best practices, and adding a prefix that we'll use in naming resources. This way, more than one 
-instance of this module can be used in same AWS Envrionment
+instance of this module can be used in same AWS Environment
 
 ```shell
 resource "aws_cloudwatch_metric_alarm" "threshold" {
