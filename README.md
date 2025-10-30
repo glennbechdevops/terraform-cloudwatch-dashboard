@@ -395,4 +395,8 @@ curl --location --request POST 'http://localhost:8080/account' \
 - Get the bank's balance back to 0, for example by creating an account with a negative balance.
 - See that the alarm's state moves away from `IN_ALARM`.
 
-DONE!
+## Create a GitHub Actions workflow 
+
+* Based on previous labs and what you have learned about Terraform state you show now be able to take this repository - and make a GitHub aciotns workflow that applies the infrastructure 
+on pushes on the main branch.
+* Configure terraform state properly using aws s3 as a backend 
