@@ -212,9 +212,6 @@ You are now going to create a Micrometer Gauge that displays the net balance of 
 Please note that you have to import the BigDecimal class. When you add this code. Add the `import java.math.BigDecimal` line to the top of the file.
 
 ```
-import java.math.BigDecimal;
-
-```shell
 // This meter type "Gauge" reports the total amount of money in the bank
 Gauge.builder("bank_sum", theBank,
                 b -> b.values()
