@@ -207,7 +207,7 @@ It should look something like this:
 
 ## Gauge for the Bank's Total Sum
 
-You are now going to create a Micrometer Gauge that displays the net balance of the bank. How much money that is in all accoubts - Place it inside the `public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent)` method in BankAcountController class. 
+You are now going to create a Micrometer Gauge that displays the net balance of the bank. How much money that is in all accounts - Place it inside the `public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent)` method in BankAcountController class. 
 
 Please note that you have to import the BigDecimal class. When you add this code. Add the `import java.math.BigDecimal` line to the top of the file.
 
