@@ -227,8 +227,10 @@ Gauge.builder("bank_sum", theBank,
 
 ## Create a New Widget in the CloudWatch Dashboard
 
-Extend the Terraform code so that it displays an additional widget for the metric bank_sum.
-Hint: you will need to change the X/Y values so they do not overlap!
+Extend the Terraform code in the infra folder, so that it displays an additional widget for the  metric `bank_sum` you just created. 
+Look at the `resource "aws_cloudwatch_dashboard" "main"` you created in Part 1 of this exercise and make a similar one. 
+
+Remember to change the X/Y values so they do not overlap!
 
 ## Cloudwatch Alarm
 We will create an Alarm that is triggered if the total sum of the bank exceeds a given amount.
