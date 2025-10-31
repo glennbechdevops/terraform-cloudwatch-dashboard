@@ -315,7 +315,9 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
 - Notice how one `resource` refers to another in Terraform!
 - Terraform creates both an SNS Topic and an email subscription.
 
-## Create a new file in the same directory, `variables.tf`
+## Create a new file in the /infra/alarm_module directory, `variables.tf`
+
+This will be the variables available in the module, as you can see, we make a sensible _default_ for threshold, but require the user of the module of specify email and prefix
 
 ```shell
 
@@ -334,7 +336,7 @@ variable "prefix" {
 
 ```
 
-## Create a new file in the same directory, outputs.tf
+## Create a new file in /infra/alarm_module, outputs.tf
 
 ```
 output "alarm_arn" {
@@ -374,7 +376,8 @@ resource "aws_cloudwatch_dashboard" "main" {
 DASHBOARD
 }
 
-module "alarm" {
+
+module "alarm" { << ----------- THIS IS ADDED!
   source = "./alarm_module"
   alarm_email = var.alarm_email
   prefix = var.student_name
@@ -382,13 +385,24 @@ module "alarm" {
 
 ```
 ## Finally, you must change variables.tf in the /infra folder, and add the variable. 
+
+When we run terraform frmo the *main* folder - we want the user to specify the email recipient for the alarm. 
+*do not add* add your student email in the variable like this! 
+
+```hcl
+variable "glenn.bech@gmail.com" {
+    type = string
+}
+```
+
+The *name* of the  variable is alarm_email, the *value* is your email address and will be provided as a value when terraform run. You *can* Feel free to set your own email address as the default value for this variable 
+
 ```hcl
 variable "alarm_email" {
     type = string
 }
 ```
 
-Because we do not want to hardcode email, or any specific values in our Terraform code. Feel free to set your own email address as the default value for this variable 
 
 # Run the Terraform Code from Codespaces
 
