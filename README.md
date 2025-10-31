@@ -225,7 +225,41 @@ Gauge.builder("bank_sum", theBank,
 ## Create a New Widget in the CloudWatch Dashboard
 
 Extend the Terraform code in the infra folder, so that it displays an additional widget for the  metric `bank_sum` you just created. 
-Look at the `resource "aws_cloudwatch_dashboard" "main"` you created in Part 1 of this exercise and make a similar one. 
+In the resource "aws_cloudwatch_dashboard" "main"`, in the file infra/dashboards.tf, add more code. 
+
+````
+resource "aws_cloudwatch_dashboard" "main" {
+  dashboard_name = var.student_name
+  dashboard_body = <<DEATHSTAR
+{
+  "widgets": [
+    {
+       <<<<<< ----- INSERT ANOTHER WISGET HERE!
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "${var.student_name}",
+            "account_count.value"
+          ]
+        ],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Total number of accounts"
+      }
+    }
+  ]
+}
+DEATHSTAR
+}
+```
 
 Remember to change the X/Y values so they do not overlap!
 
