@@ -234,7 +234,7 @@ resource "aws_cloudwatch_dashboard" "main" {
 {
   "widgets": [
     {
-       <<<<<< ----- INSERT ANOTHER WISGET HERE!
+       <<<<<< ----- INSERT ANOTHER WIDGET HERE!
     },
     {
       "type": "metric",
