@@ -227,7 +227,7 @@ Gauge.builder("bank_sum", theBank,
 Extend the Terraform code in the infra folder, so that it displays an additional widget for the  metric `bank_sum` you just created. 
 In the resource "aws_cloudwatch_dashboard" "main"`, in the file infra/dashboards.tf, add more code. 
 
-````
+```
 resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = var.student_name
   dashboard_body = <<DEATHSTAR
