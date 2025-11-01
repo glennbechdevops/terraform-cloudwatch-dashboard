@@ -344,7 +344,7 @@ output "alarm_arn" {
 }
 ```
 
-You can now modify main.tf in the /infra directory to include your module. It will then look like this:
+You can now modify dashboard.tf in the /infra directory to include your module. It will then look like this:
 
 ```shell
 resource "aws_cloudwatch_dashboard" "main" {
