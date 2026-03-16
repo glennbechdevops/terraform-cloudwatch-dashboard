@@ -84,16 +84,15 @@ resource "aws_cloudwatch_dashboard" "main" {
 DEATHSTAR
 }
 ```
-## Task 
+## Task
 
-In the terminal, use "cd" to change your working directory in to the infra folder 
+Run the following commands:
 
-* Run 
-
-```
-* terraform init
-* terraform plan 
-* terraform apply 
+```bash
+cd infra
+terraform init
+terraform plan
+terraform apply
 ```
 
 * You have to type in a student name, why?
@@ -412,9 +411,10 @@ variable "alarm_email" {
 
 # Run the Terraform Code from Codespaces
 
-## Go to the infra directory. Run:
+Run the following commands:
 
-```shell
+```bash
+cd infra
 terraform init
 terraform apply
 ```
