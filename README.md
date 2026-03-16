@@ -1,5 +1,11 @@
 # Business Metrics with Spring Boot og CloudWatch & Terraform
 
+## Prerequisites
+
+To refresh your understanding of Terraform modules, take a look at the [Terraform S3 Website exercise](https://github.com/glennbechdevops/terraform-s3-website).
+
+## Overview
+
 The application in this repository is a "mock" bank application that features various endpoints for common banking transactions.
 In this exercise, you will learn how to instrument a Spring Boot application with business metrics. By business metrics, we refer to metrics that do not pertain to the technical performance of the application, but rather to insights into user behavior, such as the amount of money transferred and the number of transactions performed.
 This exercise utilizes Java, Spring Boot, and a metrics framework called Micrometer.
@@ -442,8 +448,113 @@ curl --location --request POST 'http://localhost:8080/account' \
 - Get the bank's balance back to 0, for example by creating an account with a negative balance.
 - See that the alarm's state moves away from `IN_ALARM`.
 
-## Create a GitHub Actions workflow 
+---
 
-* Based on previous labs and what you have learned about Terraform state you show now be able to take this repository - and make a GitHub aciotns workflow that applies the infrastructure 
-on pushes on the main branch.
-* Configure terraform state properly using aws s3 as a backend 
+# Optional Challenges
+
+Want more practice? Try these challenges to deepen your understanding:
+
+## Easy Challenge: Add Transfer Counter Widget
+
+Add a widget to your CloudWatch dashboard to visualize the `transfer` counter metric that already exists in the code.
+
+**Hints:**
+- Look at the existing widget in `dashboard.tf` as a template
+- The metric name is `transfer`
+- Remember to adjust x/y coordinates so widgets don't overlap
+- Counters work well with the "Sum" statistic
+
+## Medium Challenge: Histogram Metric for Transaction Amounts
+
+Create a histogram metric to track the distribution of transaction amounts and visualize percentiles (P50, P90, P99).
+
+**Hints:**
+- Use Micrometer's `Timer` or `DistributionSummary`
+- Look at the `@Timed` annotation already used in the code
+- Percentiles help you understand outliers vs typical transactions
+- CloudWatch can display multiple percentiles in one widget
+
+## Hard Challenge: Currency Conversion with Tagged Metrics
+
+Implement a new `/convert` endpoint that converts amounts between currencies and tracks metrics by currency pair.
+
+**Hints:**
+- Add tags to your metrics: `.tag("fromCurrency", from).tag("toCurrency", to)`
+- Use a simple fixed exchange rate (e.g., 1 USD = 10 NOK)
+- Track conversion volume by currency pair
+- Create a dashboard widget that shows conversions grouped by currency
+
+---
+
+## Optional Exercise: Create a GitHub Actions workflow
+
+Based on previous labs and what you have learned about Terraform state, you can optionally create a GitHub Actions workflow that applies the infrastructure automatically on pushes to the main branch.
+
+**Need inspiration?** You can peek at a working example pipeline in the [Terraform S3 Website repository - Part 2](https://github.com/glennbechdevops/terraform-s3-website?tab=readme-ov-file#part-2-avansert-terraform---moduler-remote-state-og-cicd).
+
+### Creating IAM Access Keys for GitHub Actions
+
+Before you can run Terraform in GitHub Actions, you need to create AWS access keys and add them to GitHub Secrets:
+
+1. **Create an IAM User for CI/CD:**
+   - Go to AWS Console → IAM → Users → Create User
+   - User name: `github-actions-terraform` (or similar)
+   - Select "Attach policies directly"
+   - Attach policy: `AdministratorAccess` (for learning purposes; use more restrictive policies in production)
+
+2. **Create Access Keys:**
+   - Click on the newly created user
+   - Go to "Security credentials" tab
+   - Scroll to "Access keys" section
+   - Click "Create access key"
+   - Choose "Application running outside AWS"
+   - Click "Next" and "Create access key"
+   - **Important:** Save both the Access Key ID and Secret Access Key - you won't see the secret again!
+
+3. **Add Keys to GitHub Secrets:**
+   - Go to your GitHub repository
+   - Click Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Add two secrets:
+     - Name: `AWS_ACCESS_KEY_ID`, Value: (your access key ID)
+     - Name: `AWS_SECRET_ACCESS_KEY`, Value: (your secret access key)
+
+### Workflow Tasks
+
+* Create a `.github/workflows` directory with a Terraform workflow file
+* Configure the workflow to run `terraform plan` on pull requests and add plan output as a PR comment
+* Configure the workflow to run `terraform apply` on pushes to main branch
+* Use the GitHub Secrets you created above for AWS credentials
+* Configure Terraform state properly using AWS S3 as a backend (with DynamoDB state locking if you're feeling adventurous!)
+
+---
+
+# Going Further
+
+Interested in production-grade observability and infrastructure automation? Explore these topics:
+
+## Advanced Observability
+- **Micrometer Documentation**: [Spring Boot Actuator Metrics](https://docs.spring.io/spring-boot/reference/actuator/metrics.html)
+- **CloudWatch Best Practices**: Learn about metric math, anomaly detection, and composite alarms
+- **Distributed Tracing**: Add AWS X-Ray to trace requests across services
+- **Log Correlation**: Connect logs to metrics using correlation IDs
+
+## Terraform Advanced Topics
+- **Terraform Modules**: Create reusable, versioned modules and publish to a registry
+- **State Management**: Implement remote state with S3 and DynamoDB locking
+- **Workspaces**: Manage multiple environments (dev, staging, prod)
+- **Testing**: Use Terratest or terraform-compliance to test your infrastructure code
+
+## Production Considerations
+- **Security**: Use IAM roles instead of access keys, implement least-privilege policies
+- **Cost Optimization**: Monitor CloudWatch costs, adjust metric resolution and retention
+- **High Availability**: Multi-region deployments and failover strategies
+- **Incident Response**: Automated remediation with EventBridge and Lambda
+
+## Related AWS Services
+- **API Gateway**: Add a managed API layer with built-in metrics
+- **DynamoDB**: Replace in-memory storage with persistent database
+- **Lambda**: Serverless functions for alarm responses
+- **Container Services**: Deploy on ECS or EKS with container metrics
+
+Happy learning! 🚀 
