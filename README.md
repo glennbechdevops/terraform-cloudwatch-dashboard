@@ -496,14 +496,13 @@ Based on previous labs and what you have learned about Terraform state, you can 
 
 Before you can run Terraform in GitHub Actions, you need to create AWS access keys and add them to GitHub Secrets:
 
-1. **Create an IAM User for CI/CD:**
-   - Go to AWS Console → IAM → Users → Create User
-   - User name: `github-actions-terraform` (or similar)
-   - Select "Attach policies directly"
-   - Attach policy: `AdministratorAccess` (for learning purposes; use more restrictive policies in production)
+1. **Use Your Existing IAM User:**
+   - You already have an IAM user named `seat` + a number (e.g., `seat01`, `seat02`)
+   - This user already has the necessary permissions
 
 2. **Create Access Keys:**
-   - Click on the newly created user
+   - Go to AWS Console → IAM → Users
+   - Find and click on your user (e.g., `seat01`)
    - Go to "Security credentials" tab
    - Scroll to "Access keys" section
    - Click "Create access key"
