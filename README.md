@@ -251,7 +251,7 @@ Gauge.builder("bank_sum", theBank,
                         .map(Account::getBalance)
                         .mapToDouble(BigDecimal::doubleValue)
                         .sum())
-        .register(meterRegistry));
+        .register(meterRegistry);
 ```
 
 ## Create a New Widget in the CloudWatch Dashboard
