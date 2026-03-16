@@ -524,36 +524,4 @@ Before you can run Terraform in GitHub Actions, you need to create AWS access ke
 * Configure the workflow to run `terraform plan` on pull requests and add plan output as a PR comment
 * Configure the workflow to run `terraform apply` on pushes to main branch
 * Use the GitHub Secrets you created above for AWS credentials
-* Configure Terraform state properly using AWS S3 as a backend (with DynamoDB state locking if you're feeling adventurous!)
-
----
-
-# Going Further
-
-Interested in production-grade observability and infrastructure automation? Explore these topics:
-
-## Advanced Observability
-- **Micrometer Documentation**: [Spring Boot Actuator Metrics](https://docs.spring.io/spring-boot/reference/actuator/metrics.html)
-- **CloudWatch Best Practices**: Learn about metric math, anomaly detection, and composite alarms
-- **Distributed Tracing**: Add AWS X-Ray to trace requests across services
-- **Log Correlation**: Connect logs to metrics using correlation IDs
-
-## Terraform Advanced Topics
-- **Terraform Modules**: Create reusable, versioned modules and publish to a registry
-- **State Management**: Implement remote state with S3 and DynamoDB locking
-- **Workspaces**: Manage multiple environments (dev, staging, prod)
-- **Testing**: Use Terratest or terraform-compliance to test your infrastructure code
-
-## Production Considerations
-- **Security**: Use IAM roles instead of access keys, implement least-privilege policies
-- **Cost Optimization**: Monitor CloudWatch costs, adjust metric resolution and retention
-- **High Availability**: Multi-region deployments and failover strategies
-- **Incident Response**: Automated remediation with EventBridge and Lambda
-
-## Related AWS Services
-- **API Gateway**: Add a managed API layer with built-in metrics
-- **DynamoDB**: Replace in-memory storage with persistent database
-- **Lambda**: Serverless functions for alarm responses
-- **Container Services**: Deploy on ECS or EKS with container metrics
-
-Happy learning! 🚀 
+* Configure Terraform state properly using AWS S3 as a backend (with DynamoDB state locking if you're feeling adventurous!) 
