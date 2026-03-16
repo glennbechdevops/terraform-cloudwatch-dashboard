@@ -41,11 +41,38 @@ aws --version
 jq --version
 ```
 
+## Create IAM Access Keys
+
+Before you can use AWS services from your Codespace, you need to create access keys for your IAM user:
+
+1. **Find Your IAM User:**
+   - You already have an IAM user named `seat` + a number (e.g., `seat01`, `seat02`)
+   - This user already has the necessary permissions
+
+2. **Create Access Keys:**
+   - Go to AWS Console → IAM → Users
+   - Find and click on your user (e.g., `seat01`)
+   - Go to "Security credentials" tab
+   - Scroll to "Access keys" section
+   - Click "Create access key"
+   - Choose "Application running outside AWS"
+   - Click "Next" and "Create access key"
+   - **Important:** Save both the Access Key ID and Secret Access Key somewhere safe - you won't see the secret again!
+   - **Keep these credentials handy - you'll need them later for the optional GitHub Actions exercise**
+
 ## Run aws configure
 
-* Run `aws configure` to set up AWS credentials for your codespace  
-* use region `eu-east-1` 
-* use json as output format 
+Now configure the AWS CLI with your credentials:
+
+```bash
+aws configure
+```
+
+When prompted, enter:
+* **AWS Access Key ID**: (paste the Access Key ID you just created)
+* **AWS Secret Access Key**: (paste the Secret Access Key you just created)
+* **Default region name**: `eu-west-1`
+* **Default output format**: `json` 
 
 ## Use Terraform to Create a CloudWatch Dashboard
 
@@ -492,31 +519,16 @@ Based on previous labs and what you have learned about Terraform state, you can 
 
 **Need inspiration?** You can peek at a working example pipeline in the [Terraform S3 Website repository - Part 2](https://github.com/glennbechdevops/terraform-s3-website?tab=readme-ov-file#part-2-avansert-terraform---moduler-remote-state-og-cicd).
 
-### Creating IAM Access Keys for GitHub Actions
+### Add AWS Credentials to GitHub Secrets
 
-Before you can run Terraform in GitHub Actions, you need to create AWS access keys and add them to GitHub Secrets:
+You already created AWS access keys earlier in this exercise. Now you need to add them to GitHub Secrets:
 
-1. **Use Your Existing IAM User:**
-   - You already have an IAM user named `seat` + a number (e.g., `seat01`, `seat02`)
-   - This user already has the necessary permissions
-
-2. **Create Access Keys:**
-   - Go to AWS Console → IAM → Users
-   - Find and click on your user (e.g., `seat01`)
-   - Go to "Security credentials" tab
-   - Scroll to "Access keys" section
-   - Click "Create access key"
-   - Choose "Application running outside AWS"
-   - Click "Next" and "Create access key"
-   - **Important:** Save both the Access Key ID and Secret Access Key - you won't see the secret again!
-
-3. **Add Keys to GitHub Secrets:**
-   - Go to your GitHub repository
-   - Click Settings → Secrets and variables → Actions
-   - Click "New repository secret"
-   - Add two secrets:
-     - Name: `AWS_ACCESS_KEY_ID`, Value: (your access key ID)
-     - Name: `AWS_SECRET_ACCESS_KEY`, Value: (your secret access key)
+1. **Go to your GitHub repository**
+2. **Click Settings → Secrets and variables → Actions**
+3. **Click "New repository secret"**
+4. **Add two secrets:**
+   - Name: `AWS_ACCESS_KEY_ID`, Value: (the Access Key ID you saved earlier)
+   - Name: `AWS_SECRET_ACCESS_KEY`, Value: (the Secret Access Key you saved earlier)
 
 ### Workflow Tasks
 
