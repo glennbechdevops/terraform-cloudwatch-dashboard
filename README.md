@@ -535,5 +535,6 @@ You already created AWS access keys earlier in this exercise. Now you need to ad
 * Create a `.github/workflows` directory with a Terraform workflow file
 * Configure the workflow to run `terraform plan` on pull requests and add plan output as a PR comment
 * Configure the workflow to run `terraform apply` on pushes to main branch
+* You must configure Terraform state properly using AWS S3 as a backend (with DynamoDB state locking  
 * Use the GitHub Secrets you created above for AWS credentials
-* Configure Terraform state properly using AWS S3 as a backend (with DynamoDB state locking if you're feeling adventurous!) 
+
