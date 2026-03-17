@@ -74,7 +74,7 @@ When prompted, enter:
 * **Default region name**: `eu-west-1`
 * **Default output format**: `json` 
 
-## Use Terraform to Create a CloudWatch Dashboard
+## PART 1-  Use Terraform to Create a CloudWatch Dashboard
 
 * You should now have this repository open in your Codespaces environment
 * Look in the "infra" directory - here you will find the file dashboard.tf which contains Terraform code for a CloudWatch Dashboard.
@@ -295,7 +295,7 @@ DEATHSTAR
 
 Remember to change the X/Y values so they do not overlap!
 
-## Cloudwatch Alarm
+## PART 2 - Cloudwatch Alarm
 We will create an Alarm that is triggered if the total sum of the bank exceeds a given amount.
 
 This can be done using CloudWatch. We will also create a module for this alarm, so others can benefit from it.
