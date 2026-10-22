@@ -144,7 +144,8 @@ counting the size of the values in the map holding the accounts.
 
 ## Modify the MetricsConfig Class
 
-You need to modify the MetricsConfig class and use your own name for the cloudwatch namespace, replace the empty string "" with your student name.  
+Open *MetricsConfig.java* ,
+You need to modify the source code and use your own name for the cloudwatch namespace, replace the empty string "" with your student name.  
 
 ````java
  return new CloudWatchConfig() {
@@ -159,7 +160,8 @@ You need to modify the MetricsConfig class and use your own name for the cloudwa
 ## Start Spring Boot applikasjonen 
 
 
-From the root folder  (where you cloned repository for this exercise); Start the Spring boot app with maven with
+Open a new Terminal
+Start the Spring boot app with maven with
 
 ```
 mvn spring-boot:run
@@ -169,21 +171,9 @@ The code in this repository exposes a REST interface at http://localhost:8080/ac
 
 ## Test the API
 
-
-### Using Codespaces Port Forwarding
-
-When you run the Spring Boot application on port 8080, GitHub Codespaces will automatically detect it and forward the port.
-You'll see a notification in VS Code, and the port will appear in the "Ports" tab. You can:
-- Click on the forwarded address to open it in your browser
-- Use tools like Postman or curl from your local machine by using the forwarded URL
-- The forwarded URL will look something like: `https://username-repo-xxxxx.github.dev`
-
-![](img/postman.png)
-
 ### Use Curl in the Codespaces Terminal
 
-Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending requests, and interacting with APIs directly
-fro  the terminal or in scripts.
+Curl is a command-line tool used to transfer data to or from a server, supporting a wide range of protocols including HTTP, HTTPS, FTP, and more. It is widely used for testing, sending requests, and interacting with APIs directly from  the terminal or in scripts.
 
 Create an account with an id and balance
 ```sh
@@ -225,15 +215,11 @@ It should look something like this:
 
 ![Alt text](img/dashboard.png  "a title")
 
-
-
 ## Do not move on unless you fully understand what has been done so far 
 
 * Look at the micrometer documentation-  (https://docs.spring.io/spring-boot/reference/actuator/metrics.html)
 * Try to add more metrics to the code, also make new endpoints if you want more code to test
 * Make sure you understand the CloudWatch dashboard Syntax, at least at a high level - try to add another widget!
-
-
 
 # PART 2
 
