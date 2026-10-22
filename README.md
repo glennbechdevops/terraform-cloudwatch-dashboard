@@ -221,8 +221,6 @@ It should look something like this:
 * Try to add more metrics to the code, also make new endpoints if you want more code to test
 * Make sure you understand the CloudWatch dashboard Syntax, at least at a high level - try to add another widget!
 
-# PART 2
-
 ## Gauge for the Bank's Total Sum
 
 You are now going to create a Micrometer Gauge that displays the net balance of the bank. How much money that is in all accounts - Place it inside the `public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent)` method in BankAcountController class. 
@@ -362,7 +360,8 @@ output "alarm_arn" {
 }
 ```
 
-You can now modify dashboard.tf in the /infra directory to include your module. It will then look like this:
+You can now modify `dashboard.tf` in the /infra directory to include your module. It will then look like this, please pay attention to the 
+new alarm module at the bottom of the file!
 
 ```shell
 resource "aws_cloudwatch_dashboard" "main" {
@@ -394,8 +393,7 @@ resource "aws_cloudwatch_dashboard" "main" {
 DASHBOARD
 }
 
-
-module "alarm" { << ----------- THIS IS ADDED!
+module "alarm" {
   source = "./alarm_module"
   alarm_email = var.alarm_email
   prefix = var.student_name
@@ -404,23 +402,16 @@ module "alarm" { << ----------- THIS IS ADDED!
 ```
 ## Finally, you must change variables.tf in the /infra folder, and add the variable. 
 
-When we run terraform frmo the *main* folder - we want the user to specify the email recipient for the alarm. 
-*do not add* add your student email in the variable like this! 
+When we run terraform from the *main* folder - we want the user to specify the email recipient for the alarm. 
 
-```hcl
-variable "glenn.bech@gmail.com" {
-    type = string
-}
-```
-
-The *name* of the  variable is alarm_email, the *value* is your email address and will be provided as a value when terraform run. You *can* Feel free to set your own email address as the default value for this variable 
+The *name* of the  variable is alarm_email, the *value* is your email address and will be provided as a value when terraform run. 
+You *can* set your own email address as the default value for this variable. 
 
 ```hcl
 variable "alarm_email" {
     type = string
 }
 ```
-
 
 # Run the Terraform Code from Codespaces
 
@@ -437,6 +428,7 @@ terraform apply
 For SNS to be allowed to send you emails, you must confirm your email address. You will receive an email with a link you must click the first time you run terraform apply.
 
 ## Manually Test the Alarm and Email Sending Using SNS
+
 * Go to the AWS console
 * Go to SNS
 * From the left menu, select "Topics"
