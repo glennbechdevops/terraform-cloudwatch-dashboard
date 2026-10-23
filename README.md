@@ -45,10 +45,6 @@ jq --version
 
 Before you can use AWS services from your Codespace, you need to create access keys for your IAM user:
 
-1. **Find Your IAM User:**
-   - You already have an IAM user named `seat` + a number (e.g., `seat01`, `seat02`)
-   - This user already has the necessary permissions
-
 2. **Create Access Keys:**
    - Go to AWS Console → IAM → Users
    - Find and click on your user (e.g., `seat01`)
